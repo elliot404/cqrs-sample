@@ -7,9 +7,13 @@ var colors = require('../colors')
 
 var domain = require('cqrs-domain')({
     domainPath: __dirname + '/lib',
+    commandRejectedEventName: 'rejectedCommand',
     eventStore: {
-        type: 'inMemory', //'mongodb',
-        dbName: 'cqrssample'
+        //type: 'inMemory', //'mongodb',
+        type: 'mongodb',
+        host: 'localhost',                          // optional
+        port: 27017,  
+        dbName: 'eventStore'
     }
 });
 
@@ -17,6 +21,7 @@ domain.defineCommand({
   id: 'id',
   name: 'command',
   aggregateId: 'payload.id',
+  aggregate: 'aggregate',
   payload: 'payload',
   revision: 'head.revision'
 });
@@ -25,6 +30,7 @@ domain.defineEvent({
   id: 'id',
   name: 'event',
   aggregateId: 'payload.id',
+  aggregate: 'aggregate',
   payload: 'payload',
   revision: 'head.revision'
 });

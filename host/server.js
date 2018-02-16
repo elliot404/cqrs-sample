@@ -16,10 +16,10 @@ var app = express()
   , io = socket.listen(server);
 
 app.use(require('body-parser').json());
-app.use(express['static'](__dirname + '/public'));
+app.use(express['static'](__dirname + '/public1'));
 
 app.set('view engine', 'jade');
-app.set('views', __dirname + '/app/views');
+app.set('views', __dirname + '/app1/views');
 
 
 // BOOTSTRAPPING
@@ -28,12 +28,18 @@ console.log('\nBOOTSTRAPPING:'.cyan);
 var options = {
     denormalizerPath: __dirname + '/viewBuilders',
     repository: {
-        type: 'inMemory', //'mongodb',
-        dbName: 'cqrssample'
+        //type: 'inMemory', //'mongodb',
+        type: 'mongodb',
+        host: 'localhost',                          // optional
+        port: 27017,
+        dbName: 'repository'
     },
     revisionGuardStore: {
-        type: 'inMemory', //'mongodb',
-        dbName: 'cqrssample'
+        //type: 'inMemory', //'mongodb',
+        type: 'mongodb',
+        host: 'localhost',                          // optional
+        port: 27017,
+        dbName: 'revisionGuardStore'
     }
 };
 
@@ -47,6 +53,7 @@ viewmodel.read(options.repository, function(err, repository) {
       id: 'id',
       name: 'event',
       aggregateId: 'payload.id',
+      aggregate: 'aggregate',
       payload: 'payload',
       revision: 'head.revision'
     });
@@ -58,7 +65,7 @@ viewmodel.read(options.repository, function(err, repository) {
         }
 
         console.log('3. -> routes'.cyan);
-        require('./app/routes').actions(app, options, repository);
+        require('./app1/routes').actions(app, options, repository);
 
         console.log('4. -> message bus'.cyan);
         var msgbus = require('../msgbus');

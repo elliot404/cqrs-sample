@@ -15,7 +15,9 @@
           "type": "string"
         },
         "text": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^([^0-9]*)$"
+
         }
       },
       "required": ["id", "text"]

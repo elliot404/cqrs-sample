@@ -9,6 +9,7 @@
     "body-parser": ">=1.8.3",
     "cqrs-domain": ">=2.1.2",
     "cqrs-eventdenormalizer": ">=1.0.0",
+    "cqrs-saga": "^1.10.2",
     "express": ">=4.9.4",
     "hiredis": ">=0.1.17",
     "jade": ">=1.7.0",
